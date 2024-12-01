@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My-First-Map</title>
+    <style>
+      #map {
+        width: 100%;
+        height: 85vh;
+      }
+    </style>
+    <!-- Tambahkan API key Anda di sini -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4lKVb0eLSNyhEO-C_8JoHhAvba6aZc3U&callback=initMap" async defer></script>
+    <script>
+      function initMap() {
+        const centerCoords = { lat: -8.7467357, lng: 115.1668024 };
+        const map = new google.maps.Map(document.getElementById('map'), {
+          center: centerCoords,
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+        });
+        const marker = new google.maps.Marker({
+          position: centerCoords,
+          map: map,
+          draggable: true, //dragable untuk menggeser marker
+          title: 'Ini adalah Marker',
+        });
+        const infoWindow = new google.maps.InfoWindow();
+        marker.addListener('click', () => {
+          infoWindow.setContent('Ini adalah marker');
+          infoWindow.open(map, marker);
+        });
+        marker.addListener('dragend', (event) => {
+          const position = event.latLng;
+          infoWindow.setContent(`Your location now 🚩: <br> Latitude: ${position.lat()}, <br> Longitude: ${position.lng()}`);
+          infoWindow.open(map, marker);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>My-First-Map:)</h1>
+    <div id="map"></div>
+  </body>
+</html>
